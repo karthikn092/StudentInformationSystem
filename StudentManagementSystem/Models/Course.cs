@@ -16,13 +16,18 @@ namespace StudentManagementSystem.Models
 
         public int CourseId { get; set; }
 
+        [Required]
+        [RegularExpression("([A-Za-z])+( [A-Za-z]+)*", ErrorMessage = "Invalid Course Name")]
         [Display(Name ="Course Name")]
         public string CourseName {get;set;}
 
         [Display(Name ="No of Years")]
+        [Required]
+        [RegularExpression("^[1-9]{1}$", ErrorMessage = "Invalid No of Years")]
         public int NoOfYears{get;set;}
 
         [Display(Name = "Registered No of Semesters")]
+        [RegularExpression("^[1-9][0-9]{1}$", ErrorMessage = "Invalid No of Years")]
         public int NoOfSemesters { get; set; }
 
         public virtual ICollection<Semester> Semesters { get; set; }

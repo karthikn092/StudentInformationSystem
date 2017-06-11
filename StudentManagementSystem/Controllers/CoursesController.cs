@@ -14,40 +14,66 @@ namespace StudentManagementSystem.Controllers
     {
         private StudentInfoDbContext db = new StudentInfoDbContext();
 
+        public CoursesController()
+        {
+            db.Configuration.ValidateOnSaveEnabled = false;
+        }
+
         // GET: Courses
         public ActionResult Index()
         {
-            return View(db.Courses.ToList());
+            try
+            {
+                return View(db.Courses.ToList());
+            }
+            catch (Exception ex)
+            {
+                return View("ErrorPage");
+            }
         }
 
         // GET: Courses/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Course course = db.Courses.Find(id);
+                if (course == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(course);
             }
-            Course course = db.Courses.Find(id);
-            if (course == null)
+            catch (Exception ex)
             {
-                return HttpNotFound();
+                return View("ErrorPage");
             }
-            return View(course);
         }
 
         // GET: Courses/Create
         public ActionResult Create()
         {
-            Course course = new Course();
-            int i = 1;
-            List<Semester> subjectCollection = db.Semesters.ToList();
-            if (subjectCollection != null)
+            try
             {
-                subjectCollection.ForEach(
-                    item => course.SemestersList.Add(new CheckBoxModel() { Name = item.SemesterName, ID = i++, Value = item.TotalCredits })
-                  );
+                Course course = new Course();
+                int i = 1;
+                List<Semester> subjectCollection = db.Semesters.ToList();
+                if (subjectCollection != null)
+                {
+                    subjectCollection.ForEach(
+                        item => course.SemestersList.Add(new CheckBoxModel() { Name = item.SemesterName, ID = i++, Value = item.TotalCredits })
+                      );
+                }
+                return View(course);
             }
-            return View(course);
+            catch (Exception ex)
+            {
+                return View("ErrorPage");
+            }
         }
 
         // POST: Courses/Create
@@ -57,46 +83,61 @@ namespace StudentManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "CourseId,CourseName,NoOfYears,NoOfSemesters,SemestersList")] Course course)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var selectedItem = course.SemestersList.Where(x => x.IsSelected);
-                foreach (var item in selectedItem)
-                {
-                    var subject = db.Semesters.FirstOrDefault(x => x.SemesterName == item.Name);
-                    course.Semesters.Add(subject);
-                    subject.Course.Add(course);
-                }
-                db.Courses.Add(course);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
 
-            return View(course);
+                if (ModelState.IsValid)
+                {
+                    var selectedItem = course.SemestersList.Where(x => x.IsSelected);
+                    foreach (var item in selectedItem)
+                    {
+                        var subject = db.Semesters.FirstOrDefault(x => x.SemesterName == item.Name);
+                        course.Semesters.Add(subject);
+                        subject.Course.Add(course);
+                    }
+                    db.Courses.Add(course);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+
+                return View(course);
+            }
+            catch (Exception ex)
+            {
+                return View("ErrorPage");
+            }
         }
 
         // GET: Courses/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Course course = db.Courses.Find(id);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Course course = db.Courses.Find(id);
 
-            if (course == null)
+                if (course == null)
+                {
+                    return HttpNotFound();
+                }
+                int i = 0;
+
+                List<Semester> subjectCollection = new List<Semester>(course.Semesters);
+                foreach (var each in subjectCollection)
+                {
+                    course.SemestersList.Add(new CheckBoxModel() { Name = each.SemesterName, ID = i++, IsSelected = true, Value = each.TotalCredits });
+                }
+                db.Semesters.ToList().Except(course.Semesters).ToList().ForEach(item => course.SemestersList.Add(new CheckBoxModel() { Name = item.SemesterName, ID = i++, Value = item.TotalCredits }));
+
+                return View(course);
+            }
+            catch (Exception ex)
             {
-                return HttpNotFound();
+                return View("ErrorPage");
             }
-            int i = 0;
-
-            List<Semester> subjectCollection = new List<Semester>(course.Semesters);
-            foreach (var each in subjectCollection)
-            {
-                course.SemestersList.Add(new CheckBoxModel() { Name = each.SemesterName, ID = i++, IsSelected = true, Value = each.TotalCredits });
-            }
-            db.Semesters.ToList().Except(course.Semesters).ToList().ForEach(item => course.SemestersList.Add(new CheckBoxModel() { Name = item.SemesterName, ID = i++, Value = item.TotalCredits }));
-
-            return View(course);
         }
 
         // POST: Courses/Edit/5
@@ -106,40 +147,54 @@ namespace StudentManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "CourseId,CourseName,NoOfYears,NoOfSemesters,SemestersList")] Course course)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var exisitingSemesters = db.Courses.Where(s => s.CourseId == course.CourseId).Include(y => y.Semesters);
-                var sem = exisitingSemesters.FirstOrDefault();
-                sem.NoOfSemesters = course.NoOfSemesters;
-                sem.NoOfYears = course.NoOfYears;
-
-                sem.Semesters.Clear();
-                var selectedItem = course.SemestersList.Where(x => x.IsSelected);
-                foreach (var item in selectedItem)
+                if (ModelState.IsValid)
                 {
-                    var semester = db.Semesters.FirstOrDefault(x => x.SemesterName == item.Name);
-                    sem.Semesters.Add(semester);
+                    var exisitingSemesters = db.Courses.Where(s => s.CourseId == course.CourseId).Include(y => y.Semesters);
+                    var sem = exisitingSemesters.FirstOrDefault();
+                    sem.NoOfSemesters = course.NoOfSemesters;
+                    sem.NoOfYears = course.NoOfYears;
+
+                    sem.Semesters.Clear();
+                    var selectedItem = course.SemestersList.Where(x => x.IsSelected);
+                    foreach (var item in selectedItem)
+                    {
+                        var semester = db.Semesters.FirstOrDefault(x => x.SemesterName == item.Name);
+                        sem.Semesters.Add(semester);
+                    }
+                    db.Entry(sem).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
                 }
-                db.Entry(sem).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                return View(course);
             }
-            return View(course);
+            catch (Exception ex)
+            {
+                return View("ErrorPage");
+            }
         }
 
         // GET: Courses/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Course course = db.Courses.Find(id);
+                if (course == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(course);
             }
-            Course course = db.Courses.Find(id);
-            if (course == null)
+            catch (Exception ex)
             {
-                return HttpNotFound();
+                return View("ErrorPage");
             }
-            return View(course);
         }
 
         // POST: Courses/Delete/5
@@ -147,10 +202,23 @@ namespace StudentManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Course course = db.Courses.Find(id);
-            db.Courses.Remove(course);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                Course course = db.Courses.Find(id);
+                if (course.Students != null && course.Students.Count > 0)
+                {
+                    ViewBag.StudentNames = course.Students.Select(x => x.StudentName).ToList();
+                    ViewBag.Delete = "Course";
+                    return View("Error");
+                }
+                db.Courses.Remove(course);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                return View("ErrorPage");
+            }
         }
 
         protected override void Dispose(bool disposing)

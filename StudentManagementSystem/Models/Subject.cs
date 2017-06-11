@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StudentManagementSystem.Models
 {
@@ -16,9 +14,11 @@ namespace StudentManagementSystem.Models
 
         [Required]
         [Display(Name = "Subject Name")]
+        [RegularExpression("([A-Za-z])+( [A-Za-z]+)*", ErrorMessage = "Invalid Name")]
         public string SubjectName { get; set; }
 
         [Required]
+        [RegularExpression("^[1-9]{1}$",ErrorMessage ="Invalid Credit Score")]
         public int Credit { get; set; }
 
         public virtual ICollection<Semester> Semesters { get; set; }

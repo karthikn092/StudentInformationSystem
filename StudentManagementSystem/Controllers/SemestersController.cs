@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using StudentManagementSystem.Models;
+using System;
 
 namespace StudentManagementSystem.Controllers
 {
@@ -14,40 +13,66 @@ namespace StudentManagementSystem.Controllers
     {
         private StudentInfoDbContext db = new StudentInfoDbContext();
 
+        public SemestersController()
+        {
+            db.Configuration.ValidateOnSaveEnabled = false;
+        }
+
         // GET: Semesters
         public ActionResult Index()
         {
-            return View(db.Semesters.ToList());
+            try
+            {
+                return View(db.Semesters.ToList());
+            }
+            catch (Exception ex)
+            {
+                return View("ErrorPage");
+            }
         }
 
         // GET: Semesters/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Semester semester = db.Semesters.Find(id);
+                if (semester == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(semester);
             }
-            Semester semester = db.Semesters.Find(id);
-            if (semester == null)
+            catch (Exception ex)
             {
-                return HttpNotFound();
+                return View("ErrorPage");
             }
-            return View(semester);
         }
 
         // GET: Semesters/Create
         public ActionResult Create()
         {
-            Semester sem = new Semester();
-            int i = 1;
-            List<Subject> subjectCollection = db.Subjects.ToList();
-            if (subjectCollection != null)
+            try
             {
-                subjectCollection.ForEach(
-                    item => sem.SubjectsList.Add(new CheckBoxModel() { Name = item.SubjectName, ID = i++, Value=item.Credit })
-                  );
+                Semester sem = new Semester();
+                int i = 1;
+                List<Subject> subjectCollection = db.Subjects.ToList();
+                if (subjectCollection != null)
+                {
+                    subjectCollection.ForEach(
+                        item => sem.SubjectsList.Add(new CheckBoxModel() { Name = item.SubjectName, ID = i++, Value = item.Credit })
+                      );
+                }
+                return View(sem);
             }
-            return View(sem);
+            catch (Exception ex)
+            {
+                return View("ErrorPage");
+            }
         }
 
         // POST: Semesters/Create
@@ -57,48 +82,62 @@ namespace StudentManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "SemesterId,SemesterName,SubjectsList,TotalCredits")] Semester semester)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var selectedItem = semester.SubjectsList.Where(x => x.IsSelected);
-                foreach (var item in selectedItem)
+                if (ModelState.IsValid)
                 {
-                    var subject = db.Subjects.FirstOrDefault(x => x.SubjectName == item.Name);
-                    semester.Subjects.Add(subject);
-                    if (subject.Semesters == null)
-                        subject.Semesters = new List<Semester>();
-                    subject.Semesters.Add(semester);
+                    var selectedItem = semester.SubjectsList.Where(x => x.IsSelected);
+                    foreach (var item in selectedItem)
+                    {
+                        var subject = db.Subjects.FirstOrDefault(x => x.SubjectName == item.Name);
+                        semester.Subjects.Add(subject);
+                        if (subject.Semesters == null)
+                            subject.Semesters = new List<Semester>();
+                        subject.Semesters.Add(semester);
+                    }
+                    db.Semesters.Add(semester);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
                 }
-                db.Semesters.Add(semester);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
 
-            return View(semester);
+                return View(semester);
+            }
+            catch (Exception ex)
+            {
+                return View("ErrorPage");
+            }
         }
 
         // GET: Semesters/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Semester semester = db.Semesters.Find(id);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Semester semester = db.Semesters.Find(id);
 
-            if (semester == null)
-            {
-                return HttpNotFound();
-            }
-            int i = 0;
+                if (semester == null)
+                {
+                    return HttpNotFound();
+                }
+                int i = 0;
 
-            List<Subject> subjectCollection = new List<Subject>(semester.Subjects);
-            foreach (var each in subjectCollection)
-            {
-                semester.SubjectsList.Add(new CheckBoxModel() { Name = each.SubjectName, ID = i++, IsSelected = true, Value = each.Credit });
+                List<Subject> subjectCollection = new List<Subject>(semester.Subjects);
+                foreach (var each in subjectCollection)
+                {
+                    semester.SubjectsList.Add(new CheckBoxModel() { Name = each.SubjectName, ID = i++, IsSelected = true, Value = each.Credit });
+                }
+                db.Subjects.ToList().Except(semester.Subjects).ToList().ForEach(item => semester.SubjectsList.Add(new CheckBoxModel() { Name = item.SubjectName, ID = i++, Value = item.Credit }));
+
+                return View(semester);
             }
-            db.Subjects.ToList().Except(semester.Subjects).ToList().ForEach(item => semester.SubjectsList.Add(new CheckBoxModel() { Name = item.SubjectName, ID = i++, Value = item.Credit }));
-            
-            return View(semester);
+            catch (Exception ex)
+            {
+                return View("ErrorPage");
+            }
         }
 
         // POST: Semesters/Edit/5
@@ -108,40 +147,55 @@ namespace StudentManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "SemesterId,SemesterName,SubjectsList")] Semester semester)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var exisitingSubjects = db.Semesters.Where(s => s.SemesterId == semester.SemesterId).Include(y => y.Subjects);
-                var sem = exisitingSubjects.FirstOrDefault();
-                sem.SemesterName = semester.SemesterName;
-                sem.TotalCredits = semester.TotalCredits;
-
-                sem.Subjects.Clear();
-                var selectedItem = semester.SubjectsList.Where(x => x.IsSelected);
-                foreach (var item in selectedItem)
+                if (ModelState.IsValid)
                 {
-                    var subject = db.Subjects.FirstOrDefault(x => x.SubjectName == item.Name);
-                    sem.Subjects.Add(subject);
+                    var exisitingSubjects = db.Semesters.Where(s => s.SemesterId == semester.SemesterId).Include(y => y.Subjects);
+                    var sem = exisitingSubjects.FirstOrDefault();
+                    sem.SemesterName = semester.SemesterName;
+                    sem.TotalCredits = semester.TotalCredits;
+
+                    sem.Subjects.Clear();
+                    var selectedItem = semester.SubjectsList.Where(x => x.IsSelected);
+                    foreach (var item in selectedItem)
+                    {
+                        var subject = db.Subjects.FirstOrDefault(x => x.SubjectName == item.Name);
+                        sem.Subjects.Add(subject);
+                    }
+                    db.Entry(sem).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
                 }
-                db.Entry(sem).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                return View(semester);
             }
-            return View(semester);
+            catch (Exception ex)
+            {
+                return View("ErrorPage");
+            }
         }
 
         // GET: Semesters/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Semester semester = db.Semesters.Find(id);
+                if (semester == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(semester);
             }
-            Semester semester = db.Semesters.Find(id);
-            if (semester == null)
+            catch (Exception ex)
             {
-                return HttpNotFound();
+                return View("ErrorPage");
             }
-            return View(semester);
         }
 
         // POST: Semesters/Delete/5
@@ -149,10 +203,23 @@ namespace StudentManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Semester semester = db.Semesters.Find(id);
-            db.Semesters.Remove(semester);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                Semester semester = db.Semesters.Find(id);
+                if (semester.Students != null && semester.Students.Count > 0)
+                {
+                    ViewBag.StudentNames = semester.Students.Select(x => x.StudentName).ToList();
+                    ViewBag.Delete = "Semester";
+                    return View("Error");
+                }
+                db.Semesters.Remove(semester);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                return View("ErrorPage");
+            }
         }
 
         protected override void Dispose(bool disposing)

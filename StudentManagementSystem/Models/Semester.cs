@@ -16,6 +16,7 @@ namespace StudentManagementSystem.Models
         public int SemesterId { get; set; }
 
         [Display(Name ="Semester Name")]
+        [Required]
         public string SemesterName { get; set; }
 
         [Display(Name = "Total Credits")]

@@ -164,6 +164,10 @@
     <Compile Include="Migrations\201706100436174_StudentContext1.Designer.cs">
       <DependentUpon>201706100436174_StudentContext1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706110749127_StudentContext2.cs" />
+    <Compile Include="Migrations\201706110749127_StudentContext2.Designer.cs">
+      <DependentUpon>201706110749127_StudentContext2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CheckBoxModel.cs" />
     <Compile Include="Models\College.cs" />
@@ -277,6 +281,7 @@
     <Content Include="Views\Students\Details.cshtml" />
     <Content Include="Views\Students\Edit.cshtml" />
     <Content Include="Views\Students\Index.cshtml" />
+    <Content Include="Views\Shared\ErrorPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -299,6 +304,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706100436174_StudentContext1.resx">
       <DependentUpon>201706100436174_StudentContext1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706110749127_StudentContext2.resx">
+      <DependentUpon>201706110749127_StudentContext2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

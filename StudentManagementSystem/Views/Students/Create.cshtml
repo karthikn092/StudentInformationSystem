@@ -42,7 +42,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Age, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Age, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Age, new { htmlAttributes = new { @class = "form-control", @disabled = true, @id="age" } })
+                @Html.HiddenFor(model => model.Age, new { @id = "agehidden" })
                 @Html.ValidationMessageFor(model => model.Age, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -74,7 +75,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Grade, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Grade, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(x => x.Grade, new SelectList(Model.GradeCollection, "Value", "Text"), "Select Grade", new { @id = "gradedrop" })
                 @Html.ValidationMessageFor(model => model.Grade, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -93,7 +94,13 @@
 <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
 <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
 <script>
-     $("#@Html.IdFor(m => m.Dob)").datepicker({
+    $("#@Html.IdFor(m => m.Dob)").datepicker({
+        onSelect: function (value, ui) {
+            var today = new Date(),
+                age = today.getFullYear() - ui.selectedYear;
+            $('#age').val(age);
+            $('#agehidden').val(age);
+        },
          dateFormat: 'dd-MM-yy',
          changeMonth: true,
          changeYear: true,

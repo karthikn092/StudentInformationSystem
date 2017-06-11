@@ -6,8 +6,31 @@
 </head>
 <body>
     <hgroup>
-        <h1>Error.</h1>
-        <h2>An error occurred while processing your request.</h2>
+        <h1 class="text-danger">Caution!</h1>
+        <h4><p>Following Students have registered to the particular @ViewBag.Delete. You cannot delete the @ViewBag.Delete unless students have De-Registered the same.</p> </h4>
+        @{
+            <ul>
+                @foreach (var student in ViewBag.StudentNames)
+                {
+                    <li><h5><b>@student</b></h5></li>
+                }
+            </ul>
+        }
+        @{
+            if(ViewBag.Delete == "College")
+            {
+                <h5>@Html.ActionLink("Go Back to Colleges List","Index","Colleges")</h5>
+            }
+            else if (ViewBag.Delete == "Course")
+            {
+                <h5>@Html.ActionLink("Go Back to Courses List", "Index", "Courses")</h5>
+            }
+            else if (ViewBag.Delete == "Semester")
+            {
+                <h5>@Html.ActionLink("Go Back to Semesters List", "Index", "Semesters")</h5>
+            }
+        }
+        <h4></h4>
     </hgroup>
 </body>
 </html>

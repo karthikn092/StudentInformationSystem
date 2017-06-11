@@ -15,18 +15,30 @@ namespace StudentManagementSystem.Controllers
     {
         private StudentInfoDbContext db = new StudentInfoDbContext();
 
+        public StudentsController()
+        {
+            db.Configuration.ValidateOnSaveEnabled = false;
+        }
+
         // GET: Students
         public ActionResult Index()
         {
-            List<Student> student = db.Students.Include(x => x.College).Include(y => y.Courses).Include(y => y.Semesters).ToList();
-            student.ForEach(item =>
+            try
             {
-                item.CollegeString = item.College.CollegeName;
-                item.CourseString = item.Courses.CourseName;
-                item.SemesterString = item.Semesters.SemesterName;
+                List<Student> student = db.Students.Include(x => x.College).Include(y => y.Courses).Include(y => y.Semesters).ToList();
+                student.ForEach(item =>
+                {
+                    item.CollegeString = item.College.CollegeName;
+                    item.CourseString = item.Courses.CourseName;
+                    item.SemesterString = item.Semesters.SemesterName;
+                }
+                    );
+                return View(student);
             }
-                );
-            return View(student);
+            catch (Exception ex)
+            {
+                return View("ErrorPage");
+            }
         }
 
         // GET: Students/Details/5
@@ -51,19 +63,27 @@ namespace StudentManagementSystem.Controllers
         // GET: Students/Create
         public ActionResult Create()
         {
-            Student student = new Student();
-            List<College> collegeCollection = db.Colleges.ToList();
-            student.CollegeCollection = new List<object>();
-            student.SemestersList = new List<object>();
-            student.CoursesList = new List<object>();
-
-            if (collegeCollection != null)
+            try
             {
-                collegeCollection.ForEach(
-                    item => student.CollegeCollection.Add(new SelectListItem() { Text = item.CollegeName, Value = item.CollegeName })
-                  );
+                Student student = new Student();
+                List<College> collegeCollection = db.Colleges.ToList();
+                student.CollegeCollection = new List<object>();
+                student.SemestersList = new List<object>();
+                student.CoursesList = new List<object>();
+
+                if (collegeCollection != null)
+                {
+                    collegeCollection.ForEach(
+                        item => student.CollegeCollection.Add(new SelectListItem() { Text = item.CollegeName, Value = item.CollegeName })
+                      );
+                }
+                student.GradeCollection = GetGradeCollection();
+                return View(student);
             }
-            return View(student);
+            catch (Exception ex)
+            {
+                return View("ErrorPage");
+            }
         }
 
         // POST: Students/Create
@@ -75,83 +95,98 @@ namespace StudentManagementSystem.Controllers
         public ActionResult Create([Bind(Include = "StudentId,StudentName,Dob,Photo,Grade,Age," +
             "CollegeString,CourseString,SemesterString,ImageData")] Student student)
         {
-            if (ModelState.IsValid)
+            try
             {
-                HttpPostedFileBase file = Request.Files["ImageData"];
-                student.Photo = ConvertToBytes(file);
+                if (ModelState.IsValid)
+                {
+                    HttpPostedFileBase file = Request.Files["ImageData"];
+                    student.Photo = ConvertToBytes(file);
 
-                var college = db.Colleges.FirstOrDefault(x => x.CollegeName == student.CollegeString);
-                student.College = college;
-                college.Students.Add(student);
+                    var college = db.Colleges.FirstOrDefault(x => x.CollegeName == student.CollegeString);
+                    student.College = college;
+                    //college.Students.Add(student);
 
-                var course = db.Courses.FirstOrDefault(x => x.CourseName == student.CourseString);
-                student.Courses = course;
-                course.Students.Add(student);
+                    var course = db.Courses.FirstOrDefault(x => x.CourseName == student.CourseString);
+                    student.Courses = course;
+                    //course.Students.Add(student);
 
-                var semester = db.Semesters.FirstOrDefault(x => x.SemesterName == student.SemesterString);
-                student.Semesters = semester;
-                semester.Students.Add(student);
+                    var semester = db.Semesters.FirstOrDefault(x => x.SemesterName == student.SemesterString);
+                    student.Semesters = semester;
+                    //semester.Students.Add(student);
 
-                db.Students.Add(student);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                    db.Students.Add(student);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                List<College> collegeCollection = db.Colleges.ToList();
+                student.CollegeCollection = new List<object>();
+                student.SemestersList = new List<object>();
+                student.CoursesList = new List<object>();
+                if (collegeCollection != null)
+                {
+                    collegeCollection.ForEach(
+                        item => student.CollegeCollection.Add(new SelectListItem() { Text = item.CollegeName, Value = item.CollegeName })
+                      );
+                }
+                return View(student);
             }
-            List<College> collegeCollection = db.Colleges.ToList();
-            student.CollegeCollection = new List<object>();
-            student.SemestersList = new List<object>();
-            student.CoursesList = new List<object>();
-            if (collegeCollection != null)
+            catch (Exception ex)
             {
-                collegeCollection.ForEach(
-                    item => student.CollegeCollection.Add(new SelectListItem() { Text = item.CollegeName, Value = item.CollegeName })
-                  );
+                return View("ErrorPage");
             }
-            return View(student);
         }
 
         // GET: Students/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Student student = db.Students.Find(id);
-            if (student == null)
-            {
-                return HttpNotFound();
-            }
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Student student = db.Students.Find(id);
+                if (student == null)
+                {
+                    return HttpNotFound();
+                }
 
-            student.CollegeCollection = new List<object>();
-            student.SemestersList = new List<object>();
-            student.CoursesList = new List<object>();
+                student.CollegeCollection = new List<object>();
+                student.SemestersList = new List<object>();
+                student.CoursesList = new List<object>();
 
-            List<College> collegeCollection = db.Colleges.ToList();
-            if (collegeCollection != null)
-            {
-                collegeCollection.ForEach(
-                    item => student.CollegeCollection.Add(new SelectListItem() { Text = item.CollegeName, Value = item.CollegeName })
-                  );
-            }
-            List<Course> coursseCollection = db.Courses.ToList();
-            if (coursseCollection != null)
-            {
-                coursseCollection.ForEach(
-                    item => student.CoursesList.Add(new SelectListItem() { Text = item.CourseName, Value = item.CourseName })
-                  );
-            }
-            List<Semester> semesterCollection = db.Semesters.ToList();
-            if (semesterCollection != null)
-            {
-                semesterCollection.ForEach(
-                    item => student.SemestersList.Add(new SelectListItem() { Text = item.SemesterName, Value = item.SemesterName })
-                  );
-            }
-            student.CollegeString = student.College.CollegeName;
-            student.CourseString = student.Courses.CourseName;
-            student.SemesterString = student.Semesters.SemesterName;
+                List<College> collegeCollection = db.Colleges.ToList();
+                if (collegeCollection != null)
+                {
+                    collegeCollection.ForEach(
+                        item => student.CollegeCollection.Add(new SelectListItem() { Text = item.CollegeName, Value = item.CollegeName })
+                      );
+                }
+                List<Course> coursseCollection = db.Courses.ToList();
+                if (coursseCollection != null)
+                {
+                    coursseCollection.ForEach(
+                        item => student.CoursesList.Add(new SelectListItem() { Text = item.CourseName, Value = item.CourseName })
+                      );
+                }
+                List<Semester> semesterCollection = db.Semesters.ToList();
+                if (semesterCollection != null)
+                {
+                    semesterCollection.ForEach(
+                        item => student.SemestersList.Add(new SelectListItem() { Text = item.SemesterName, Value = item.SemesterName })
+                      );
+                }
+                student.GradeCollection = GetGradeCollection();
+                student.CollegeString = student.College.CollegeName;
+                student.CourseString = student.Courses.CourseName;
+                student.SemesterString = student.Semesters.SemesterName;
 
-            return View(student);
+                return View(student);
+            }
+            catch (Exception ex)
+            {
+                return View("ErrorPage");
+            }
         }
 
         // POST: Students/Edit/5
@@ -162,62 +197,76 @@ namespace StudentManagementSystem.Controllers
         public ActionResult Edit([Bind(Include = "StudentId,StudentName,Dob,Grade,Age," +
             "CollegeString,CourseString,SemesterString")] Student student)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var exisitingStudent = db.Students.Where(s => s.StudentId == student.StudentId).Include(y => y.College)
-                                                                                               .Include(y => y.Courses)
-                                                                                               .Include(y => y.Semesters);
-                var stud = exisitingStudent.FirstOrDefault();
-
-                stud.StudentName = student.StudentName;
-                stud.Grade = student.Grade;
-                stud.Age = student.Age;
-                stud.Dob = student.Dob;
-
-                var college = db.Colleges.FirstOrDefault(x => x.CollegeName == student.CollegeString);
-                stud.College = college;
-                college.Students.Add(stud);
-
-                var course = db.Courses.FirstOrDefault(x => x.CourseName == student.CourseString);
-                stud.Courses = course;
-                course.Students.Add(stud);
-
-                var semester = db.Semesters.FirstOrDefault(x => x.SemesterName == student.SemesterString);
-                stud.Semesters = semester;
-                semester.Students.Add(stud);
-
-
-                HttpPostedFileBase file = Request.Files["ImageData"];
-                if (file != null && file.ContentLength > 0)
+                if (ModelState.IsValid)
                 {
-                    stud.Photo = ConvertToBytes(file);
+                    var exisitingStudent = db.Students.Where(s => s.StudentId == student.StudentId).Include(y => y.College)
+                                                                                                   .Include(y => y.Courses)
+                                                                                                   .Include(y => y.Semesters);
+                    var stud = exisitingStudent.FirstOrDefault();
+
+                    stud.StudentName = student.StudentName;
+                    stud.Grade = student.Grade;
+                    stud.Age = student.Age;
+                    stud.Dob = student.Dob;
+
+                    var college = db.Colleges.FirstOrDefault(x => x.CollegeName == student.CollegeString);
+                    stud.College = college;
+                    //college.Students.Add(stud);
+
+                    var course = db.Courses.FirstOrDefault(x => x.CourseName == student.CourseString);
+                    stud.Courses = course;
+                    //course.Students.Add(stud);
+
+                    var semester = db.Semesters.FirstOrDefault(x => x.SemesterName == student.SemesterString);
+                    stud.Semesters = semester;
+                    //semester.Students.Add(stud);
+
+
+                    HttpPostedFileBase file = Request.Files["ImageData"];
+                    if (file != null && file.ContentLength > 0)
+                    {
+                        stud.Photo = ConvertToBytes(file);
+                    }
+
+                    db.Entry(stud).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+
                 }
-
-                db.Entry(stud).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-
+                return View(student);
             }
-            return View(student);
+            catch (Exception ex)
+            {
+                return View("ErrorPage");
+            }
         }
 
         // GET: Students/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Student student = db.Students.Include(y => y.College).Include(y => y.Courses).Include(y => y.Semesters).FirstOrDefault(x => x.StudentId == id);
-            if (student == null)
-            {
-                return HttpNotFound();
-            }
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Student student = db.Students.Include(y => y.College).Include(y => y.Courses).Include(y => y.Semesters).FirstOrDefault(x => x.StudentId == id);
+                if (student == null)
+                {
+                    return HttpNotFound();
+                }
 
-            student.CollegeString = student.College.CollegeName;
-            student.CourseString = student.Courses.CourseName;
-            student.SemesterString = student.Semesters.SemesterName;
-            return View(student);
+                student.CollegeString = student.College.CollegeName;
+                student.CourseString = student.Courses.CourseName;
+                student.SemesterString = student.Semesters.SemesterName;
+                return View(student);
+            }
+            catch (Exception ex)
+            {
+                return View("ErrorPage");
+            }
         }
 
         // POST: Students/Delete/5
@@ -225,10 +274,17 @@ namespace StudentManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Student student = db.Students.Find(id);
-            db.Students.Remove(student);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                Student student = db.Students.Include(y => y.College).Include(y => y.Courses).Include(y => y.Semesters).FirstOrDefault(x => x.StudentId == id);
+                db.Students.Remove(student);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                return View("ErrorPage");
+            }
         }
 
         public JsonResult GetDropDown(string dropId, string dropValue)
@@ -273,12 +329,27 @@ namespace StudentManagementSystem.Controllers
             base.Dispose(disposing);
         }
 
-        public byte[] ConvertToBytes(HttpPostedFileBase image)
+        private byte[] ConvertToBytes(HttpPostedFileBase image)
         {
             byte[] imageBytes = null;
             BinaryReader reader = new BinaryReader(image.InputStream);
             imageBytes = reader.ReadBytes((int)image.ContentLength);
             return imageBytes;
+        }
+
+        private List<object> GetGradeCollection()
+        {
+            return new List<object>()
+            {
+                new SelectListItem(){ Text="S", Value="S"},
+                new SelectListItem(){ Text="A", Value="A"},
+                new SelectListItem(){ Text="A", Value="A"},
+                new SelectListItem(){ Text="B", Value="B"},
+                new SelectListItem(){ Text="C", Value="C"},
+                new SelectListItem(){ Text="D", Value="D"},
+                new SelectListItem(){ Text="E", Value="E"},
+                new SelectListItem(){ Text="F", Value="F"},
+            };
         }
     }
 }

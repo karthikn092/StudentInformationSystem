@@ -17,10 +17,13 @@ namespace StudentManagementSystem.Models
         public int StudentId { get; set; }
 
         [Display(Name = "Name")]
+        [Required]
+        [RegularExpression("([A-Za-z])+( [A-Za-z]+)*", ErrorMessage ="Invalid Name")]
         public string StudentName { get; set; }
 
         [Display(Name = "Date of Birth")]
         [DataType(DataType.Date)]
+        [Required]
         public DateTime? Dob { get; set; }
 
         [Display(Name = "Photo")]
@@ -30,6 +33,8 @@ namespace StudentManagementSystem.Models
         public int Age { get; set; }
 
         public string Grade { get; set; }
+        [NotMapped]
+        public List<object> GradeCollection { get; set; }
 
         public virtual Course Courses { get; set; }
         public virtual Semester Semesters { get; set; }
