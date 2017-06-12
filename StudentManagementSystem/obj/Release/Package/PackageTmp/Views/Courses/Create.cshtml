@@ -1,0 +1,91 @@
+﻿@model StudentManagementSystem.Models.Course
+
+@{
+    ViewBag.Title = "Create Course";
+}
+
+<h2>Create Course</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Course</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.CourseName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CourseName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CourseName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.NoOfYears, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NoOfYears, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NoOfYears, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NoOfSemesters, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NoOfSemesters, new { htmlAttributes = new { @class = "form-control", @id = "totalsemesters", @disabled = true } })
+                @Html.HiddenFor(model => model.NoOfSemesters, new { @id = "totalsemestershidden" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("List of Semesters", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <ul class="checkboxes">
+                    @{
+                        for (int i = 0; i < Model.SemestersList.Count; i++)
+                        {
+                            <li>
+                                @{
+                                    @Html.HiddenFor(m => m.SemestersList[i].ID)
+                                    @Html.HiddenFor(m => m.SemestersList[i].Name)
+                                    @Html.CheckBoxFor(m => m.SemestersList[i].IsSelected, new { @class = "checkclick" })
+                                    @Html.LabelFor(m => m.SemestersList[i].IsSelected, Model.SemestersList[i].Name)
+                                    <span>  - @Html.DisplayFor(model => model.SemestersList[i].Value)</span>
+                                }
+                            </li>
+                                    }
+                    }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+                                    }
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<script>
+    $(document).ready(function () {
+        $(".checkclick").click(function () {
+            var sum = 0;
+            $("input[class='checkclick']").each(function () {
+                if ($(this).prop("checked") == true) {
+                    sum = sum + 1;
+                }
+            });
+            $("#totalsemesters").val(sum);
+            $("#totalsemestershidden").val(sum);
+
+        });
+    });
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,55 @@
+﻿@model IEnumerable<StudentManagementSystem.Models.Semester>
+
+@{
+    ViewBag.Title = "Semesters";
+}
+
+<h2>Semesters</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SemesterName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalCredits)
+        </th>
+        <th>
+            @Html.DisplayName("Subjects Registered")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SemesterName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalCredits)
+            </td>
+            <td>
+                @{
+                    string subjects = string.Empty;
+                    if (@item.Subjects != null && @item.Subjects.Count > 0)
+                    {
+                        List<string> subjectNames = item.Subjects.Select(x => x.SubjectName).ToList();
+                        subjects = string.Join(", ", subjectNames);
+                        <span>@subjects</span>
+                        @Html.Display(subjects)
+                    }
+                }
+              
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.SemesterId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.SemesterId })
+            </td>
+        </tr>
+                    }
+
+</table>
