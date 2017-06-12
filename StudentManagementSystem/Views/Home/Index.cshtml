@@ -1,31 +1,76 @@
-﻿@{
+﻿@model StudentManagementSystem.Models.ReportViewModel
+
+@{
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+<table class="table" id="currentyeartable">
+    <tr><td align="center"><label>Count of Student Added Recently</label></td></tr>
+    <tr>
+        <td><label>Last Student Added</label></td>
+        @{
+            if (Model.LastAddedStudent != null)
+            {
+                <td>
+                    @Model.LastAddedStudent.StudentName
+                </td>
+            }
+            else
+            {
+                <td> No Record Found!</td>
+            }
+        }
+    </tr>
+    <tr>
+        <td><label>Student Added Last Month</label></td>
+        @{
+            if (Model.LastMonthAddedStudent != null)
+            {
+                <td>
+                    @Model.LastMonthAddedStudent.StudentName;
+                </td>
+            }
+            else
+            {
+                <td> No Record Found!</td>
+            }
+        }
+    </tr>
+</table>
+<table class="table" id="lastyeartable" style="display:none">
+    @{int year = @DateTime.Now.Year - 1; }
+    <tr><td align="center"><label>Count of Student Added Last Year - @year</label></td></tr>
+    <tr><td><label>January</label></td><td><label>@Model.count1</label></td></tr>
+    <tr><td><label>February</label></td><td><label>@Model.count2</label></td></tr>
+    <tr><td><label>March</label></td><td><label>@Model.count3</label></td></tr>
+    <tr><td><label>April</label></td><td><label>@Model.count4</label></td></tr>
+    <tr><td><label>May</label></td><td><label>@Model.count5</label></td></tr>
+    <tr><td><label>June</label></td><td><label>@Model.count6</label></td></tr>
+    <tr><td><label>July</label></td><td><label>@Model.count7</label></td></tr>
+    <tr><td><label>August</label></td><td><label>@Model.count8</label></td></tr>
+    <tr><td><label>September</label></td><td><label>@Model.count9</label></td></tr>
+    <tr><td><label>October</label></td><td><label>@Model.count10</label></td></tr>
+    <tr><td><label>November</label></td><td><label>@Model.count11</label></td></tr>
+    <tr><td><label>December</label></td><td><label>@Model.count12</label></td></tr>
+</table>
+
+<div class="form-group">
+    <div class="col-2">
+        <input type="button" value="Current Year" id="currentyearbutton" class="btn btn-default">
+        <input type="button" value="Last Year" id="lastyearbutton" class="btn btn-default">
+    </div>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+<script>
+    $(document).ready(function () {
+        $("#currentyearbutton").click(function () {
+            $("#currentyeartable").show();
+            $("#lastyeartable").hide();
+        });
+        $("#lastyearbutton").click(function () {
+            $("#lastyeartable").show();
+            $("#currentyeartable").hide();
+        });
+    });
+</script>
+

@@ -1,7 +1,44 @@
 ﻿@{
-    ViewBag.Title = "About";
+    ViewBag.Title = "Student Management System";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<p>Use this area to provide additional information.</p>
+<div class="jumbotron">
+    <h1>Student Management System</h1>
+    <p class="lead">
+        A Student Management System for education establishments to manage student data.
+        Student information systems provide capabilities for registering students, colleges, courses, semester, subjects and view report.
+    </p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Students</h2>
+        <p>
+            You will be able to enter student details such as name, date of birth, age, photo, college, course, semester, grade.
+            Where Course and Semester are populated based on College selected.
+        </p>
+        <p>@Html.ActionLink("Students", "Index", "Students", null, new { @class = "btn btn-primary btn-lg" })</p>
+    </div>
+    <div class="col-md-4">
+        <h2>Colleges</h2>
+        <p>You can enter the College name, City and State information</p>
+        <p>@Html.ActionLink("Colleges", "Index", "Colleges", null, new { @class = "btn btn-primary btn-lg" })</p>
+    </div>
+    <div class="col-md-4">
+        <h2>Course</h2>
+        <p>You can enter the Course name, no of years and no of semesters. Where the user can select the semesters from the database.</p>
+        <p>@Html.ActionLink("Courses", "Index", "Courses", null, new { @class = "btn btn-primary btn-lg" })</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <h2>Semester</h2>
+        <p>You can enter the Semester name, total credits and subjects.  Where the user can select the subjects from the database and the credits are calculated according to the selection. </p>
+        <p>@Html.ActionLink("Semesters", "Index", "Semesters", null, new { @class = "btn btn-primary btn-lg" })</p>
+    </div>
+    <div class="col-md-4">
+        <h2>Subjects</h2>
+        <p>You can enter the Subject name and credits for all the subject. where both name and credit are mandatory</p>
+        <p>@Html.ActionLink("Subjects", "Index", "Subjects", null, new { @class = "btn btn-primary btn-lg" })</p>
+    </div>
+</div>

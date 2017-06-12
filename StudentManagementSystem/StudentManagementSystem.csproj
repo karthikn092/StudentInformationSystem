@@ -168,10 +168,15 @@
     <Compile Include="Migrations\201706110749127_StudentContext2.Designer.cs">
       <DependentUpon>201706110749127_StudentContext2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706121741582_StudentContext3.cs" />
+    <Compile Include="Migrations\201706121741582_StudentContext3.Designer.cs">
+      <DependentUpon>201706121741582_StudentContext3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CheckBoxModel.cs" />
     <Compile Include="Models\College.cs" />
     <Compile Include="Models\Course.cs" />
+    <Compile Include="Models\ReportModel.cs" />
     <Compile Include="Models\Semester.cs" />
     <Compile Include="Models\StudentInfoDbContext.cs" />
     <Compile Include="Models\Student.cs" />
@@ -225,6 +230,7 @@
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\sort.png" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
@@ -307,6 +313,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706110749127_StudentContext2.resx">
       <DependentUpon>201706110749127_StudentContext2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706121741582_StudentContext3.resx">
+      <DependentUpon>201706121741582_StudentContext3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

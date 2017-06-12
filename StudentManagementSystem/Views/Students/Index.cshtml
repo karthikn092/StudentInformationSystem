@@ -11,29 +11,36 @@
 </p>
 <table class="table" id="studenttable">
     <tr>
-        <th onclick="sortTable(0)">
+        <th>
             @Html.DisplayNameFor(model => model.StudentName)
+            <img src="~/fonts/sort.png" onclick="sortTable(0)" id="sortimage" />
         </th>
-        <th onclick="sortTable(1)">
+        <th>
             @Html.DisplayNameFor(model => model.Dob)
+            <img src="~/fonts/sort.png" onclick="sortTable(1)" id="sortimage" />
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Photo)
         </th>
-        <th onclick="sortTable(3)">
+        <th>
             @Html.DisplayNameFor(model => model.Age)
+            <img src="~/fonts/sort.png" onclick="sortTable(3)" id="sortimage" />
         </th>
-        <th onclick="sortTable(4)">
+        <th>
             <span>College</span>
+            <img src="~/fonts/sort.png" onclick="sortTable(4)" id="sortimage" />
         </th>
-        <th onclick="sortTable(5)">
+        <th>
             <span>Course</span>
+            <img src="~/fonts/sort.png" onclick="sortTable(5)" id="sortimage" />
         </th>
-        <th onclick="sortTable(6)">
+        <th>
             <span>Semester</span>
+            <img src="~/fonts/sort.png" onclick="sortTable(6)" id="sortimage" />
         </th>
-        <th onclick="sortTable(7)">
+        <th>
             @Html.DisplayNameFor(model => model.Grade)
+            <img src="~/fonts/sort.png" onclick="sortTable(7)" id="sortimage" />
         </th>
         <th></th>
     </tr>

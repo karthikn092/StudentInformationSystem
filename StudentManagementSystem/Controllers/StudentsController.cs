@@ -113,7 +113,8 @@ namespace StudentManagementSystem.Controllers
                     var semester = db.Semesters.FirstOrDefault(x => x.SemesterName == student.SemesterString);
                     student.Semesters = semester;
                     //semester.Students.Add(student);
-
+                    student.CreatedDate = DateTime.Now;
+                    student.UpdatedDate = DateTime.Now;
                     db.Students.Add(student);
                     db.SaveChanges();
                     return RedirectToAction("Index");
@@ -229,6 +230,7 @@ namespace StudentManagementSystem.Controllers
                     {
                         stud.Photo = ConvertToBytes(file);
                     }
+                    stud.UpdatedDate = DateTime.Now;
 
                     db.Entry(stud).State = EntityState.Modified;
                     db.SaveChanges();
