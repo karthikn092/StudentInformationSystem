@@ -75,3 +75,4 @@ C:\Users\User\Desktop\Projects\TandemNZ\StudentInformationSystem\StudentManageme
 C:\Users\User\Desktop\Projects\TandemNZ\StudentInformationSystem\StudentManagementSystem\obj\Release\StudentManagementSystem.dll
 C:\Users\User\Desktop\Projects\TandemNZ\StudentInformationSystem\StudentManagementSystem\obj\Release\StudentManagementSystem.pdb
 C:\Users\User\Desktop\Projects\TandemNZ\StudentInformationSystem\StudentManagementSystem\obj\Release\StudentManagementSystem.csprojResolveAssemblyReference.cache
+C:\Users\User\Desktop\Projects\TandemNZ\StudentInformationSystem\StudentManagementSystem\obj\Release\StudentManagementSystem.Migrations.StudentContext5.resources
