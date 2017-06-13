@@ -156,29 +156,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201706100339548_StudentContext.cs" />
-    <Compile Include="Migrations\201706100339548_StudentContext.Designer.cs">
-      <DependentUpon>201706100339548_StudentContext.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201706100436174_StudentContext1.cs" />
-    <Compile Include="Migrations\201706100436174_StudentContext1.Designer.cs">
-      <DependentUpon>201706100436174_StudentContext1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201706110749127_StudentContext2.cs" />
-    <Compile Include="Migrations\201706110749127_StudentContext2.Designer.cs">
-      <DependentUpon>201706110749127_StudentContext2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201706121741582_StudentContext3.cs" />
-    <Compile Include="Migrations\201706121741582_StudentContext3.Designer.cs">
-      <DependentUpon>201706121741582_StudentContext3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201706121925437_StudentContext4.cs" />
-    <Compile Include="Migrations\201706121925437_StudentContext4.Designer.cs">
-      <DependentUpon>201706121925437_StudentContext4.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201706122040276_StudentContext5.cs" />
-    <Compile Include="Migrations\201706122040276_StudentContext5.Designer.cs">
-      <DependentUpon>201706122040276_StudentContext5.cs</DependentUpon>
+    <Compile Include="Migrations\201706131917393_StudentContext.cs" />
+    <Compile Include="Migrations\201706131917393_StudentContext.Designer.cs">
+      <DependentUpon>201706131917393_StudentContext.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CheckBoxModel.cs" />
@@ -314,23 +294,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201706100339548_StudentContext.resx">
-      <DependentUpon>201706100339548_StudentContext.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201706100436174_StudentContext1.resx">
-      <DependentUpon>201706100436174_StudentContext1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201706110749127_StudentContext2.resx">
-      <DependentUpon>201706110749127_StudentContext2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201706121741582_StudentContext3.resx">
-      <DependentUpon>201706121741582_StudentContext3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201706121925437_StudentContext4.resx">
-      <DependentUpon>201706121925437_StudentContext4.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201706122040276_StudentContext5.resx">
-      <DependentUpon>201706122040276_StudentContext5.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201706131917393_StudentContext.resx">
+      <DependentUpon>201706131917393_StudentContext.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -16,7 +16,7 @@ namespace StudentManagementSystem.Models
 
         [Display(Name = "College Name")]
         [Required]
-        [RegularExpression("([A-Za-z])+( [A-Za-z]+)*", ErrorMessage = "Invalid Name")]
+        [RegularExpression("^[a-zA-Z0-9 ]+$", ErrorMessage = "Invalid Name")]
         public string CollegeName { get; set; }
 
         [Required]

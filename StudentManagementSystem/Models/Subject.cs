@@ -14,7 +14,7 @@ namespace StudentManagementSystem.Models
 
         [Required]
         [Display(Name = "Subject Name")]
-        [RegularExpression("([A-Za-z])+( [A-Za-z]+)*", ErrorMessage = "Invalid Name")]
+        [RegularExpression("^[a-zA-Z0-9 ]+$", ErrorMessage = "Invalid Name")]
         public string SubjectName { get; set; }
 
         [Required]

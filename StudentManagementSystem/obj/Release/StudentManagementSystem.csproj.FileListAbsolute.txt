@@ -67,12 +67,7 @@ C:\Users\User\Desktop\Projects\TandemNZ\StudentInformationSystem\StudentManageme
 C:\Users\User\Desktop\Projects\TandemNZ\StudentInformationSystem\StudentManagementSystem\bin\Microsoft.AI.WindowsServer.xml
 C:\Users\User\Desktop\Projects\TandemNZ\StudentInformationSystem\StudentManagementSystem\bin\Microsoft.AI.Web.xml
 C:\Users\User\Desktop\Projects\TandemNZ\StudentInformationSystem\StudentManagementSystem\obj\Release\StudentManagementSystem.Migrations.StudentContext.resources
-C:\Users\User\Desktop\Projects\TandemNZ\StudentInformationSystem\StudentManagementSystem\obj\Release\StudentManagementSystem.Migrations.StudentContext1.resources
-C:\Users\User\Desktop\Projects\TandemNZ\StudentInformationSystem\StudentManagementSystem\obj\Release\StudentManagementSystem.Migrations.StudentContext2.resources
-C:\Users\User\Desktop\Projects\TandemNZ\StudentInformationSystem\StudentManagementSystem\obj\Release\StudentManagementSystem.Migrations.StudentContext3.resources
-C:\Users\User\Desktop\Projects\TandemNZ\StudentInformationSystem\StudentManagementSystem\obj\Release\StudentManagementSystem.Migrations.StudentContext4.resources
 C:\Users\User\Desktop\Projects\TandemNZ\StudentInformationSystem\StudentManagementSystem\obj\Release\StudentManagementSystem.csproj.GenerateResource.Cache
 C:\Users\User\Desktop\Projects\TandemNZ\StudentInformationSystem\StudentManagementSystem\obj\Release\StudentManagementSystem.dll
 C:\Users\User\Desktop\Projects\TandemNZ\StudentInformationSystem\StudentManagementSystem\obj\Release\StudentManagementSystem.pdb
 C:\Users\User\Desktop\Projects\TandemNZ\StudentInformationSystem\StudentManagementSystem\obj\Release\StudentManagementSystem.csprojResolveAssemblyReference.cache
-C:\Users\User\Desktop\Projects\TandemNZ\StudentInformationSystem\StudentManagementSystem\obj\Release\StudentManagementSystem.Migrations.StudentContext5.resources

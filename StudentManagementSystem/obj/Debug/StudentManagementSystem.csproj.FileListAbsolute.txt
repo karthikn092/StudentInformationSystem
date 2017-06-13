@@ -140,12 +140,8 @@ C:\Users\User\Desktop\Projects\TandemNZ\StudentInformationSystem\StudentManageme
 C:\Users\User\Desktop\Projects\TandemNZ\StudentInformationSystem\StudentManagementSystem\bin\Microsoft.AI.ServerTelemetryChannel.xml
 C:\Users\User\Desktop\Projects\TandemNZ\StudentInformationSystem\StudentManagementSystem\bin\Microsoft.AI.WindowsServer.xml
 C:\Users\User\Desktop\Projects\TandemNZ\StudentInformationSystem\StudentManagementSystem\bin\Microsoft.AI.Web.xml
-C:\Users\User\Desktop\Projects\TandemNZ\StudentInformationSystem\StudentManagementSystem\obj\Debug\StudentManagementSystem.Migrations.StudentContext.resources
-C:\Users\User\Desktop\Projects\TandemNZ\StudentInformationSystem\StudentManagementSystem\obj\Debug\StudentManagementSystem.Migrations.StudentContext1.resources
-C:\Users\User\Desktop\Projects\TandemNZ\StudentInformationSystem\StudentManagementSystem\obj\Debug\StudentManagementSystem.Migrations.StudentContext2.resources
-C:\Users\User\Desktop\Projects\TandemNZ\StudentInformationSystem\StudentManagementSystem\obj\Debug\StudentManagementSystem.Migrations.StudentContext3.resources
-C:\Users\User\Desktop\Projects\TandemNZ\StudentInformationSystem\StudentManagementSystem\obj\Debug\StudentManagementSystem.Migrations.StudentContext4.resources
-C:\Users\User\Desktop\Projects\TandemNZ\StudentInformationSystem\StudentManagementSystem\obj\Debug\StudentManagementSystem.csproj.GenerateResource.Cache
 C:\Users\User\Desktop\Projects\TandemNZ\StudentInformationSystem\StudentManagementSystem\obj\Debug\StudentManagementSystem.dll
 C:\Users\User\Desktop\Projects\TandemNZ\StudentInformationSystem\StudentManagementSystem\obj\Debug\StudentManagementSystem.pdb
-C:\Users\User\Desktop\Projects\TandemNZ\StudentInformationSystem\StudentManagementSystem\obj\Debug\StudentManagementSystem.Migrations.StudentContext5.resources
+C:\Users\User\Desktop\Projects\TandemNZ\StudentInformationSystem\StudentManagementSystem\obj\Debug\StudentManagementSystem.csprojResolveAssemblyReference.cache
+C:\Users\User\Desktop\Projects\TandemNZ\StudentInformationSystem\StudentManagementSystem\obj\Debug\StudentManagementSystem.Migrations.StudentContext.resources
+C:\Users\User\Desktop\Projects\TandemNZ\StudentInformationSystem\StudentManagementSystem\obj\Debug\StudentManagementSystem.csproj.GenerateResource.Cache

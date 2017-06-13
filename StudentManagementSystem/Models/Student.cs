@@ -18,7 +18,7 @@ namespace StudentManagementSystem.Models
 
         [Display(Name = "Name")]
         [Required]
-        [RegularExpression("([A-Za-z])+( [A-Za-z]+)*", ErrorMessage ="Invalid Name")]
+        [RegularExpression("^[a-zA-Z0-9 ]+$", ErrorMessage ="Invalid Name")]
         public string StudentName { get; set; }
 
         [Display(Name = "Date of Birth")]

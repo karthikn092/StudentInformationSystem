@@ -37,6 +37,7 @@ namespace StudentManagementSystem.Controllers
             }
             catch (Exception ex)
             {
+                throw ex;
                 return View("ErrorPage");
             }
         }
