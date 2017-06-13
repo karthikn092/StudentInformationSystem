@@ -52,7 +52,7 @@
                 @Html.DisplayFor(modelItem => item.StudentName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Dob, "{0:dd-MMM-yyyy}", new { htmlAttributes = new { @class = "datespan" } })
+                @Html.DisplayFor(modelItem => item.Dob, "{dd/MMM/yyyy}", new { htmlAttributes = new { @class = "datespan" } })
                 @*@{string date = item.Dob != null ? item.Dob.Value.ToString("dd MMM yyyy") : "";}
                     <span class="datespan" >@date</span>*@
             </td>
@@ -123,10 +123,16 @@
                         }
                     }
                     else if (n == 1) {
-                        var dateFirst = rows[i].getElementsByTagName("TD")[n].innerHTML.trim().split("-");
+                        var dateFirst = rows[i].getElementsByTagName("TD")[n].innerHTML.trim().split("/");
+                        if (dateFirst.length <= 1) {
+                            var dateFirst = rows[i].getElementsByTagName("TD")[n].innerHTML.trim().split("-");
+                        }
                         var currentdate = new Date(dateFirst[2], dateFirst[1] - 1, dateFirst[0]);
 
-                        var dateSecond = rows[i + 1].getElementsByTagName("TD")[n].innerHTML.trim().split("-");
+                        var dateSecond = rows[i + 1].getElementsByTagName("TD")[n].innerHTML.trim().split("/");
+                        if (dateSecond.length <= 1) {
+                            var dateSecond = rows[i + 1].getElementsByTagName("TD")[n].innerHTML.trim().split("-");
+                        }
                         var seconddate = new Date(dateSecond[2], dateSecond[1] - 1, dateSecond[0]);
 
                         if (currentdate > seconddate) {
@@ -145,10 +151,16 @@
                         }
                     }
                     else if (n == 1) {
-                        var dateFirst = rows[i].getElementsByTagName("TD")[n].innerHTML.trim().split("-");
+                        var dateFirst = rows[i].getElementsByTagName("TD")[n].innerHTML.trim().split("/");
+                        if (dateFirst.length <= 1) {
+                            var dateFirst = rows[i].getElementsByTagName("TD")[n].innerHTML.trim().split("-");
+                        }
                         var currentdate = new Date(dateFirst[2], dateFirst[1] - 1, dateFirst[0]);
 
-                        var dateSecond = rows[i + 1].getElementsByTagName("TD")[n].innerHTML.trim().split("-");
+                        var dateSecond = rows[i + 1].getElementsByTagName("TD")[n].innerHTML.trim().split("/");
+                        if (dateSecond.length <= 1) {
+                            var dateSecond = rows[i + 1].getElementsByTagName("TD")[n].innerHTML.trim().split("-");
+                        }
                         var seconddate = new Date(dateSecond[2], dateSecond[1] - 1, dateSecond[0]);
 
                         if (currentdate < seconddate) {

@@ -133,7 +133,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/27/2016 14:50:24</publishTime>
     </File>
     <File Include="bin/StudentManagementSystem.dll">
-      <publishTime>06/14/2017 00:54:39</publishTime>
+      <publishTime>06/14/2017 01:00:01</publishTime>
     </File>
     <File Include="bin/System.Web.Helpers.dll">
       <publishTime>01/28/2015 04:04:30</publishTime>
@@ -427,7 +427,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/11/2017 12:13:01</publishTime>
     </File>
     <File Include="Views/Students/Index.cshtml">
-      <publishTime>06/12/2017 23:06:35</publishTime>
+      <publishTime>06/14/2017 01:21:40</publishTime>
     </File>
     <File Include="Views/Subjects/Create.cshtml">
       <publishTime>06/10/2017 09:20:20</publishTime>
@@ -448,7 +448,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/08/2017 00:59:04</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>06/13/2017 23:49:02</publishTime>
+      <publishTime>06/14/2017 01:00:01</publishTime>
     </File>
   </ItemGroup>
 </Project>
